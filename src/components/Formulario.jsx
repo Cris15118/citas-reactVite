@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import Error from "./error";
-function Formulario({setPacientes, pacientes, paciente, setPaciente}) {
- 
+function Formulario({ setPacientes, pacientes, paciente, setPaciente }) {
   const [nombre, setNombre] = useState("");
   const [propietario, setPropietario] = useState("");
   const [email, setEmail] = useState("");
@@ -10,21 +9,21 @@ function Formulario({setPacientes, pacientes, paciente, setPaciente}) {
 
   const [error, setError] = useState(false);
 
-useEffect (()=>{
- if(Object.keys(paciente).length > 0){
-  setNombre(paciente.nombre)
-  setPropietario(paciente.propietario)
-  setEmail(paciente.email)
-  setFecha(paciente.fecha)
-  setSintomas(paciente.sintomas)
- }
-}, [paciente])
+  useEffect(() => {
+    if (Object.keys(paciente).length > 0) {
+      setNombre(paciente.nombre);
+      setPropietario(paciente.propietario);
+      setEmail(paciente.email);
+      setFecha(paciente.fecha);
+      setSintomas(paciente.sintomas);n
+    }
+  }, [paciente]);
 
-  const generarId= ()=>{
+  const generarId = () => {
     const random = Math.random().toString(36).substr(2);
-    const fecha = Date.now().toString(36)
-    return random + fecha
-  }
+    const fecha = Date.now().toString(36);
+    return random + fecha;
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -40,31 +39,29 @@ useEffect (()=>{
       propietario,
       email,
       fecha,
-      sintomas
-     
-    }
-    if(paciente.id){
+      sintomas,
+    };
+    if (paciente.id) {
       // Editando el registro
-      objetoPaciente.id=paciente.id
-      const pacientesActualizados = pacientes.map(pacienteState => pacienteState.id === paciente.id ? objetoPaciente : pacienteState)
+      objetoPaciente.id = paciente.id;
+      const pacientesActualizados = pacientes.map((pacienteState) =>
+        pacienteState.id === paciente.id ? objetoPaciente : pacienteState
+      );
 
-      setPacientes(pacientesActualizados)
-      setPaciente({})
-
-
-    }else{
+      setPacientes(pacientesActualizados);
+      setPaciente({});
+    } else {
       //nuevo registro
-      objetoPaciente.id= generarId()
-      setPacientes([...pacientes, objetoPaciente])
+      objetoPaciente.id = generarId();
+      setPacientes([...pacientes, objetoPaciente]);
     }
-   
-    
+
     //REINICIAR FORM
-    setNombre('')
-    setPropietario('')
-    setEmail('')
-    setFecha('')
-    setSintomas('')
+    setNombre("");
+    setPropietario("");
+    setEmail("");
+    setFecha("");
+    setSintomas("");
   };
 
   return (
@@ -78,7 +75,11 @@ useEffect (()=>{
         className="bg-white shadow-md rounded-lg py-10 px-5 mb-10"
         onSubmit={handleSubmit}
       >
-        {error && <Error><p>Todos los campos son obligatorios</p></Error> }
+        {error && (
+          <Error>
+            <p>Todos los campos son obligatorios</p>
+          </Error>
+        )}
         <div className="mb-5">
           <label
             className="block text-gray-700 uppercase font-bold"
@@ -162,7 +163,7 @@ useEffect (()=>{
         <input
           type="submit"
           className="bg-indigo-600 w-full p-3 text-white uppercase font-bold hover:bg-indigo-700 cursor-pointer transition-all"
-          value= {paciente.id ? "Editar paciente": "Agregar paciente" }
+          value={paciente.id ? "Editar paciente" : "Agregar paciente"}
         />
       </form>
     </div>
